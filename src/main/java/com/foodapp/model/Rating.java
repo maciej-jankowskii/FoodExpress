@@ -1,11 +1,11 @@
 package com.foodapp.model;
 
+import com.foodapp.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,14 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "rating_value")
     private Integer value;
     private String description;
     private LocalDate dateAdded;
-    @ManyToMany(mappedBy = "ratings")
-    private List<User> users = new ArrayList<>();
-    @ManyToMany(mappedBy = "ratings")
-    private List<Restaurant> restaurants = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

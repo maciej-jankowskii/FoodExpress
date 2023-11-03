@@ -23,7 +23,10 @@ public class Restaurant {
     private Address address;
     @Enumerated(EnumType.STRING)
     private Cuisine typeOfCuisine;
-    @ManyToMany(mappedBy = "restaurants")
+    @ManyToMany
+    @JoinTable(name = "restaurant_rating",
+    joinColumns = @JoinColumn(name = "restaurant_id"),
+    inverseJoinColumns = @JoinColumn(name = "rating_id"))
     private List<Rating> ratings = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "restaurant_dish",

@@ -1,5 +1,6 @@
 package com.foodapp.model;
 
+import com.foodapp.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

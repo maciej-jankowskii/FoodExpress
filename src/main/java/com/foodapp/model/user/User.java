@@ -1,5 +1,8 @@
-package com.foodapp.model;
+package com.foodapp.model.user;
 
+import com.foodapp.model.Address;
+import com.foodapp.model.Order;
+import com.foodapp.model.Rating;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +19,14 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ig;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    @OneToMany(mappedBy = "user")
-    private List<Address> addresses = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
     @ManyToMany
