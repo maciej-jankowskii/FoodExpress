@@ -1,4 +1,4 @@
-package com.foodapp.model;
+package com.foodapp.model.dish;
 
 import jakarta.persistence.*;
 import lombok.Getter;

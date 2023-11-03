@@ -1,4 +1,4 @@
-package com.foodapp.model;
+package com.foodapp.model.address;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

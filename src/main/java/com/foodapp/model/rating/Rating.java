@@ -1,5 +1,6 @@
-package com.foodapp.model;
+package com.foodapp.model.rating;
 
+import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;

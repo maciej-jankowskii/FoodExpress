@@ -1,5 +1,9 @@
-package com.foodapp.model;
+package com.foodapp.model.restaurant;
 
+import com.foodapp.model.address.Address;
+import com.foodapp.model.enums.Cuisine;
+import com.foodapp.model.dish.Dish;
+import com.foodapp.model.rating.Rating;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

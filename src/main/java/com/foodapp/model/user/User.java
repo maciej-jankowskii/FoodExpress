@@ -1,8 +1,8 @@
 package com.foodapp.model.user;
 
-import com.foodapp.model.Address;
-import com.foodapp.model.Order;
-import com.foodapp.model.Rating;
+import com.foodapp.model.address.Address;
+import com.foodapp.model.order.Order;
+import com.foodapp.model.rating.Rating;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

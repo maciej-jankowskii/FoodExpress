@@ -1,4 +1,4 @@
-package com.foodapp.model;
+package com.foodapp.model.enums;
 
 public enum OrderStatus {
     NEW,

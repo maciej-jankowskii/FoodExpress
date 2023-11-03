@@ -1,5 +1,8 @@
-package com.foodapp.model;
+package com.foodapp.model.order;
 
+import com.foodapp.model.dish.Dish;
+import com.foodapp.model.enums.OrderStatus;
+import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
