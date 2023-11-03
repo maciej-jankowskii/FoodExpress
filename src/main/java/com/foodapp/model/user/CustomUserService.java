@@ -22,7 +22,7 @@ public class CustomUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with this not found"));
     }
 
-    private UserDetails createUserDetails(UserDTO userDTO){
+    private UserDetails createUserDetails(UserDTO userDTO) {
         return User.builder()
                 .username(userDTO.getEmail())
                 .password(userDTO.getPassword())

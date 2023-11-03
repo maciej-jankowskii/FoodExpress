@@ -18,35 +18,38 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "home/index";
     }
 
     @GetMapping("/register")
-    public String registerForm(Model model){
+    public String registerForm(Model model) {
         UserRegistrationDTO user = new UserRegistrationDTO();
         model.addAttribute("user", user);
         return "/home/register-form";
     }
 
     @PostMapping("/register")
-    public String register(UserRegistrationDTO dto){
+    public String register(UserRegistrationDTO dto) {
         userService.register(dto);
         return "redirect:/confirmation-reg";
     }
+
     @GetMapping("confirmation-reg")
-    public String regConfirmation(){
+    public String regConfirmation() {
         return "/home/registration-confirmation";
     }
 
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm() {
         return "/home/login-form";
     }
 
     @GetMapping("/home-page")
-    public String homeForm(Authentication authentication, Model model){
-        model.addAttribute("username", authentication.getName());
+    public String homeForm(Authentication authentication, Model model) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("welcomeMessage", "Witaj, " + username + "!");
         return "home/home-page";
     }
 }

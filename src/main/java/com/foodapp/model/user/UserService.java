@@ -17,11 +17,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<UserDTO> findUserByEmail(String email){
+    public Optional<UserDTO> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).map(userMapper::map);
     }
 
-    public void register(UserRegistrationDTO dto){
+    public void register(UserRegistrationDTO dto) {
         User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
