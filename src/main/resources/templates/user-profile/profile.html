@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil użytkownika - FoodApp</title>
+  <style>
+    body {
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .main-content {
+      margin: 20px;
+      padding: 20px;
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .user-welcome {
+      margin: 20px;
+      padding: 20px;
+    }
+
+    .user-welcome h2 {
+      margin: 0;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: rgba(0, 123, 255, 1);
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Profil użytkownika</h1>
+</div>
+<div class="main-content">
+  <div class="user-welcome">
+    <h3>Twoje extra punkty: <span th:text="${points}"></span></h3>
+  </div>
+  <div class="address-form">
+    <h4>Ustaw nowy adres dostawy</h4>
+    <form th:action="@{/change-address}" method="post">
+      <div>
+        <input type="text" class="form-input" placeholder="Ulica" name="street" required>
+      </div>
+      <div>
+        <input type="text" class="form-input" placeholder="Numer domu" name="homeNo" required>
+      </div>
+      <div>
+        <input type="text" class="form-input" placeholder="Numer mieszkania (opcjonalny)" name="flatNo">
+      </div>
+      <div>
+        <input type="text" class="form-input" placeholder="Miasto" name="city" required>
+      </div>
+      <div>
+        <input type="text" class="form-input" placeholder="Kod pocztowy" name="postalCode" required>
+      </div>
+      <div>
+        <button class="button" type="submit">Zapisz adres</button>
+      </div>
+    </form>
+  </div>
+  </br>
+  <p>__________________________</p>
+  </br>
+
+  <div class="password-change-form">
+    <h4>Zmień hasło</h4>
+    <form th:action="@{/change-password}" method="post">
+      <div>
+        <input type="password" class="form-input" placeholder="Obecne hasło" name="currentPassword" required>
+      </div>
+      <div>
+        <input type="password" class="form-input" placeholder="Nowe hasło" name="newPassword" required>
+      </div>
+      <div>
+        <button class="button" type="submit">Zmień hasło</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

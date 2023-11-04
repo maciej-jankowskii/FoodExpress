@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodApp - Aplikacja do zamawiania jedzenia</title>
+    <title>Potwierdzenie Adresu - FoodApp</title>
     <style>
         body {
             background-image: url('/img/knifefork.jpg');
@@ -22,26 +22,13 @@
             padding: 20px;
         }
 
-        .main-content {
-            margin: 20px;
-            padding: 20px;
+        .confirmation-content {
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .app-logo {
-            width: 200px;
-            height: 200px;
+            padding: 20px;
             margin: 20px auto;
-            background-image: url('/img/knifefork.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-        }
-
-        .button-container {
-            margin-top: 20px;
+            max-width: 400px;
         }
 
         .button {
@@ -64,14 +51,11 @@
 <body>
 <div class="header">
     <h1>FoodApp</h1>
-    <p>Witaj w naszej aplikacji do zamawiania jedzenia. Teraz możesz zamawiać ulubione potrawy online!</p>
 </div>
-<div class="main-content">
-    <div class="app-logo"></div>
-    <div class="button-container">
-        <a class="button" th:href="@{/register}">Rejestracja</a>
-        <a class="button" th:href="@{/login}">Logowanie</a>
-    </div>
+<div class="confirmation-content">
+    <h2>Zapisano nowy adres dostawy!</h2>
+    <p>Dziękujemy za zaktualizowanie swojego adresu.</p>
+    <a th:href="@{/home-page}" class="button">Powrót do panelu użytkownika</a>
 </div>
 </body>
 </html>

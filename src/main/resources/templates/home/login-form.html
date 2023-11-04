@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logowanie - Aplikacja do zamawiania jedzenia</title>
+  <title>FoodApp - Aplikacja do zamawiania jedzenia</title>
   <style>
     body {
       background-size: cover;
@@ -87,6 +87,9 @@
       <input type="text" name="username" placeholder="Nazwa użytkownika" required><br>
       <input type="password" name="password" placeholder="Hasło" required><br>
       <button class="button" type="submit">Zaloguj</button>
+      <div th:if="${param.error}">
+        <p style="color: red">Podałeś niepoprawne dane, spróbuj ponownie.</p>
+      </div>
     </form>
   </div>
 </div>

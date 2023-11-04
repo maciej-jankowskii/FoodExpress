@@ -33,7 +33,6 @@ public class SecurityConfig {
         http.logout(logout -> logout.logoutRequestMatcher(mvc.pattern(HttpMethod.GET, "/logout/**"))
                 .logoutSuccessUrl("/").permitAll());
 
-        http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
 
         return http.build();
