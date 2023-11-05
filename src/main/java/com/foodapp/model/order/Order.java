@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,5 @@ public class Order {
     private List<Dish> dishes;
     private OrderStatus orderStatus;
     private LocalDate orderDate;
-    private Double totalCost;
     private String comments;
 }

@@ -14,5 +14,6 @@ public class WebConfig implements ErrorPageRegistrar {
     public void registerErrorPages(ErrorPageRegistry registry) {
         registry.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/address-error"));
         registry.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/password-change-error"));
+        registry.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/restaurant-error"));
     }
 }

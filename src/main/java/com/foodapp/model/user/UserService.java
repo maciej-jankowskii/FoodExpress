@@ -1,9 +1,5 @@
 package com.foodapp.model.user;
 
-import com.foodapp.model.address.Address;
-import com.foodapp.model.address.AddressDTO;
-import com.foodapp.model.address.AddressMapper;
-import com.foodapp.model.address.AddressRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,15 +12,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final AddressMapper addressMapper;
-    private final AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, AddressMapper addressMapper, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
-        this.addressMapper = addressMapper;
-        this.addressRepository = addressRepository;
     }
 
     public Optional<UserDTO> findUserByEmail(String email) {
