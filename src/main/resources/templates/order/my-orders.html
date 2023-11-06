@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodApp - Aplikacja do zamawiania jedzenia</title>
+    <title>Moje zamówienia - FoodApp</title>
     <style>
         body {
             background-image: url('/img/knifefork.jpg');
@@ -34,8 +34,21 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-        .button-container {
+        .table-container {
             margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #fff;
         }
 
         .button {
@@ -56,17 +69,28 @@
     </style>
 </head>
 <body>
-<div class="header" >
+<div class="header">
     <h1>FoodApp</h1>
-    <p th:text="${welcomeMessage}">Witaj, [nazwa użytkownika]!</p>
 </div>
 <div class="main-content">
-    <div class="button-container">
-        <a class="button" th:href="@{/profile}">Profil użytkownika</a>
-        <a class="button" th:href="@{/order}">Zamów jedzenie</a>
-        <a class="button" th:href="@{/my-orders}">Moje zamówienia</a>
-        <a class="button" th:href="@{/logout}">Wyloguj</a>
+    <h2>Moje zamówienia</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Numer zamówienia</th>
+                <th>Data zamówienia</th>
+                <th>Suma zamówienia</th>
+                <th>Restauracja</th>
+            </tr>
+            <tr th:each="order : ${allOrders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${order.totalCost} + ' PLN'">100</td>
+                <td th:text="${order.restaurant.name}"></td>
+            </tr>
+        </table>
     </div>
+    <a class="button" th:href="@{/home-page}">Powrót do strony głównej</a>
 </div>
 </body>
 </html>

@@ -133,6 +133,13 @@ public class ClientOrderController {
         return "order/payment-success";
 
     }
+
+    @GetMapping("/my-orders")
+    public String myOrdersForm(Model model){
+        List<Order> allOrders = orderService.findAllByStatus(OrderStatus.ZAŁOŻONE);
+        model.addAttribute("allOrders", allOrders);
+        return "order/my-orders";
+    }
 }
 
 

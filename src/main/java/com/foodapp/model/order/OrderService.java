@@ -34,6 +34,10 @@ public class OrderService {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
     }
+
+    public List<Order> findAllByStatus(OrderStatus status){
+        return orderRepository.findAllByOrderStatus(status);
+    }
     @Transactional
     public Order createOrder(Long dishId, HttpSession session){
         Order order = (Order) session.getAttribute("order");
