@@ -2,8 +2,9 @@ package com.foodapp.controller;
 
 import com.foodapp.model.address.AddressDTO;
 import com.foodapp.model.address.AddressService;
-import com.foodapp.model.user.User;
+import com.foodapp.model.user.UserRegistrationDTO;
 import com.foodapp.model.user.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.NoSuchElementException;
 
 @Controller
 public class UserController {
@@ -25,11 +25,51 @@ public class UserController {
         this.addressService = addressService;
     }
 
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        UserRegistrationDTO user = new UserRegistrationDTO();
+        model.addAttribute("user", user);
+        return "/home/register-form";
+    }
+
+    @PostMapping("/register")
+    public String register(UserRegistrationDTO dto) {
+        userService.register(dto);
+        return "redirect:/confirmation-reg";
+    }
+
+    @GetMapping("confirmation-reg")
+    public String regConfirmation() {
+        return "/home/registration-confirmation";
+    }
+
+    @GetMapping("/login")
+    public String loginForm() {
+        return "/home/login-form";
+    }
+
+    @GetMapping("/home-page")
+    public String homeForm(Authentication authentication, Model model) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("welcomeMessage", "Witaj, " + username + "!");
+        return "home/home-page";
+    }
+
     @GetMapping("/profile")
-    public String profileForm(Principal principal, Model model) {
-        Integer points = getExtraPointsOfAuthenticatedUser(principal);
-        model.addAttribute("points", points);
-        return "user-profile/profile";
+    public String profileForm(Model model) {
+        try {
+            Double points = userService.getExtraPointsOfAuthenticatedUser();
+            model.addAttribute("points", points);
+            return "user-profile/profile";
+        }catch (UsernameNotFoundException e){
+            return "redirect:/user-error";
+        }
+    }
+
+    @GetMapping("user-error")
+    public String userError(){
+        return "error/user-error";
     }
 
     @PostMapping("/change-address")
@@ -67,9 +107,4 @@ public class UserController {
         return "user-profile/change-password-confirmation";
     }
 
-    private Integer getExtraPointsOfAuthenticatedUser(Principal principal){
-        String username = principal.getName();
-        User user = userService.findUser(username).orElseThrow(NoSuchElementException::new);
-        return user.getExtraPoints();
-    }
 }

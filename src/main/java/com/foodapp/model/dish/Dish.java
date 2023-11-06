@@ -1,9 +1,13 @@
 package com.foodapp.model.dish;
 
+import com.foodapp.model.restaurant.Restaurant;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -16,5 +20,8 @@ public class Dish {
     private Long id;
     private String name;
     private String description;
-    private Double price;
+    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

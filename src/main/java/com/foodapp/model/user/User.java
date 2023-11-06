@@ -37,5 +37,5 @@ public class User {
 
     )
     private List<Rating> ratings = new ArrayList<>();
-    private Integer extraPoints;
+    private Double extraPoints;
 }

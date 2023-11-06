@@ -32,9 +32,6 @@ public class Restaurant {
     joinColumns = @JoinColumn(name = "restaurant_id"),
     inverseJoinColumns = @JoinColumn(name = "rating_id"))
     private List<Rating> ratings = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "restaurant_dish",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "dish_id"))
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Dish> dishes = new ArrayList<>();
 }

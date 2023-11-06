@@ -1,10 +1,14 @@
 package com.foodapp.model.user;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -47,5 +51,21 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("Wrong current password");
         }
+    }
+
+    public User getLoggedInUser( ){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            return userRepository.findUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        }
+        return null;
+    }
+
+    public Double getExtraPointsOfAuthenticatedUser(){
+        User loggedInUser = getLoggedInUser();
+        String email = loggedInUser.getEmail();
+        User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user.getExtraPoints();
     }
 }

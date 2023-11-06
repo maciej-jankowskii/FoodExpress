@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podsumowanie zamówienia</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Dodaj odpowiednią ścieżkę do swojego pliku ze stylami -->
+    <style>
+        /* Dodatkowe style dla widoku checkout */
+        .checkout {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            list-style: none;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="checkout">
+    <h2>Podsumowanie zamówienia</h2>
+    <ul>
+        <li th:each="dish : ${orderDishes}" class="cart-item">
+            <span th:text="${dish.name}"></span> - <span th:text="${dish.price}"></span> PLN
+        </li>
+    </ul>
+    <p>Razem: <span th:text="${totalCost}"></span> PLN</p>
+    <p>Twoje extra punkty: <span th:text="${points}"></span></p>
+    <p>Ich równowartość to: <span th:text="${pointsToPLN}"></span> PLN</p>
+    <p>Za to zamówienie otrzymasz: <span th:text="${pointForOrder}"></span> punktów</p>
+
+    <a class="button" href="/realizacja-platnosci">Realizacja płatności</a>
+</div>
+</body>
+</html>
