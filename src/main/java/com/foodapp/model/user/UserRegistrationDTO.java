@@ -12,4 +12,9 @@ public class UserRegistrationDTO {
     private String lastName;
     private String email;
     private String password;
+    private String street;
+    private String homeNo;
+    private String flatNo;
+    private String city;
+    private String postalCode;
 }

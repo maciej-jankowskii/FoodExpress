@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podsumowanie Zamówienia</title>
+  <style>
+    body {
+      background-image: url('/img/knifefork.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    .header {
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .main-content {
+      margin: 20px;
+      padding: 20px;
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-summary {
+      font-size: 17px;
+    }
+
+    .dish {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      padding: 5px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .dish span:first-child {
+      flex: 1;
+      text-align: left;
+    }
+
+    .dish span:last-child {
+      flex: 1;
+      text-align: right;
+    }
+
+    .total-cost {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+
+    .payment-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    .sidebar {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 200px;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      color: #fff;
+    }
+
+    .small-text {
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>FoodApp</h1>
+</div>
+<div class="main-content">
+  <div class="cart-summary">
+    <h2>Podsumowanie Zamówienia</h2>
+    <ul>
+      <form th:each="dish : ${session.order.dishes}" th:object="${dish}" th:action="@{'/remove-from-cart/' + ${dish.id}}" method="post">
+        <span th:text="${dish.name}"></span>  <span th:text="${dish.price}"></span> PLN
+        <button type="submit" class="button">Usuń</button>
+      </form>
+    </ul>
+
+    <div class="sidebar">
+    <h3 class="small-text">Punkty które otrzymasz za zamówienie:</h3>
+    <p class="small-text" th:text="${extraPointsForOrder}"></p>
+
+    <h3 class="small-text">Twoje punkty są warte:</h3>
+      <p class="small-text" th:text="${availableExtraPoints + ' PLN'}"></p>
+  </div>
+
+    <div class="total-cost">
+      Suma: <span th:text="${session.order.totalCost}"></span> PLN
+    </div>
+    <div class="payment-buttons">
+      <a th:href="@{pay-with-points}" class="button">Zapłać punktami</a>
+      <a th:href="@{/place-order}" class="button">Złóż zamówienie i zapłać przy odbiorze</a>
+      <a th:href="@{/restaurant/menu/{restaurantId}(restaurantId=${order.getRestaurant().getId()})}" class="button">Powrót do menu restauracji</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -77,6 +77,21 @@
         <input type="password" class="form-input" placeholder="Hasło" name="password"  th:field="${user.password}" required>
       </div>
       <div>
+        <input type="city" class="form-input" placeholder="Miasto" name="city"  th:field="${user.city}" required>
+      </div>
+      <div>
+        <input type="street" class="form-input" placeholder="Ulica " name="street"  th:field="${user.street}" required>
+      </div>
+      <div>
+        <input type="homeNo" class="form-input" placeholder="Numer domu" name="homeNo"  th:field="${user.homeNo}" required>
+      </div>
+      <div>
+        <input type="flatNo" class="form-input" placeholder="Numer mieszkania (opcjonalnie)" name="flatNo"  th:field="${user.flatNo}">
+      </div>
+      <div>
+        <input type="postalCode" class="form-input" placeholder="Kod pocztowy" name="postalCode"  th:field="${user.postalCode}" required>
+      </div>
+      <div>
         <button type="submit" class="button">Zarejestruj się</button>
       </div>
     </form>

@@ -1,5 +1,7 @@
 package com.foodapp.model.user;
 
+import com.foodapp.model.address.Address;
+import com.foodapp.model.address.AddressRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -7,8 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -16,11 +16,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.addressRepository = addressRepository;
     }
 
     public Optional<UserDTO> findUserByEmail(String email) {
@@ -33,13 +35,32 @@ public class UserService {
 
     @Transactional
     public void register(UserRegistrationDTO dto) {
+        Address address = setInitialAddressData(dto);
+        User user = setInitialUserData(dto, address);
+        addressRepository.save(address);
+        userRepository.save(user);
+    }
+
+    private User setInitialUserData(UserRegistrationDTO dto, Address address) {
         User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
+        user.setAddress(address);
         String hashed = passwordEncoder.encode(dto.getPassword());
         user.setPassword(hashed);
-        userRepository.save(user);
+        user.setExtraPoints(0.0);
+        return user;
+    }
+
+    private static Address setInitialAddressData(UserRegistrationDTO dto) {
+        Address address = new Address();
+        address.setCity(dto.getCity());
+        address.setStreet(dto.getStreet());
+        address.setHomeNo(dto.getHomeNo());
+        address.setFlatNo(dto.getFlatNo());
+        address.setPostalCode(dto.getPostalCode());
+        return address;
     }
 
     @Transactional

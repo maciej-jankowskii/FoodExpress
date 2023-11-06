@@ -2,11 +2,14 @@ package com.foodapp.controller;
 
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishService;
+import com.foodapp.model.enums.OrderStatus;
 import com.foodapp.model.order.Order;
 import com.foodapp.model.order.OrderRepository;
 import com.foodapp.model.order.OrderService;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantService;
+import com.foodapp.model.user.User;
+import com.foodapp.model.user.UserRepository;
 import com.foodapp.model.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,14 +31,16 @@ public class ClientOrderController {
     private final UserService userService;
     private final RestaurantService restaurantService;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
 
-    public ClientOrderController(OrderService orderService, DishService dishService, UserService userService, RestaurantService restaurantService, OrderRepository orderRepository) {
+    public ClientOrderController(OrderService orderService, DishService dishService, UserService userService, RestaurantService restaurantService, OrderRepository orderRepository, UserRepository userRepository) {
         this.orderService = orderService;
         this.dishService = dishService;
         this.userService = userService;
         this.restaurantService = restaurantService;
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/order")
@@ -75,6 +81,56 @@ public class ClientOrderController {
         } catch (NoSuchElementException e) {
             return "redirect:/restaurant-error";
         }
+
+    }
+
+    @GetMapping("/order-summary")
+    public String summaryFrom(Model model, HttpSession session){
+        Order order = (Order) session.getAttribute("order");
+        User user = userService.getLoggedInUser();
+
+        if (order != null){
+            BigDecimal extraPointsForOrder = orderService.calculateExtraPointsForOrder(order);
+            Double availableExtraPoints = orderService.calculateExtraPoints(user);
+            model.addAttribute("order", order);
+            model.addAttribute("user", user);
+            model.addAttribute("extraPointsForOrder", extraPointsForOrder);
+            model.addAttribute("availableExtraPoints", availableExtraPoints);
+        }
+        return "order/summary";
+    }
+
+    @PostMapping("/remove-from-cart/{dishId}")
+    public String removeDishFromCart(@PathVariable("dishId") Long dishId, HttpSession session){
+        Order order = (Order) session.getAttribute("order");
+        if(order !=null){
+            orderService.removeDishFromOrder(dishId, order);
+            session.setAttribute("order", order);
+            orderRepository.save(order);
+        }
+        return "redirect:/order-summary";
+    }
+
+    @GetMapping("/pay-with-points")
+    public String payWithPoints(HttpSession session){
+        Order order = (Order) session.getAttribute("order");
+        if (orderService.payWithPoints(session)) {
+            return "order/payment-success";
+        } else {
+            return "redirect:/not-enough-points";
+        }
+    }
+
+    @GetMapping("/not-enough-points")
+    public String notEnoughPointsError(){
+        return "error/not-enough-points";
+    }
+
+    @GetMapping("/place-order")
+    public String placeOrder(HttpSession session){
+        Order order = (Order) session.getAttribute("order");
+        orderService.placeOrder(session);
+        return "order/payment-success";
 
     }
 }

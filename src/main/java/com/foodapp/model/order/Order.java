@@ -1,6 +1,7 @@
 package com.foodapp.model.order;
 
 import com.foodapp.model.dish.Dish;
+import com.foodapp.model.enums.OrderStatus;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.user.User;
 import jakarta.persistence.*;
@@ -32,6 +33,7 @@ public class Order {
     @JoinColumn(name = "dish_id")
     private List<Dish> dishes = new ArrayList<>();
     private BigDecimal totalCost;
+    private OrderStatus orderStatus;
     private LocalDate orderDate;
 
 }
