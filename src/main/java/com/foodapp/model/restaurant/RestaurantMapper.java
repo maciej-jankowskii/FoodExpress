@@ -28,6 +28,7 @@ public class RestaurantMapper {
         restaurant.setAddress(address);
         List<Dish> dishes = dishRepository.findAll();
         restaurant.setDishes(dishes);
+        restaurant.setAverageRating(dto.getAverageRating());
         return restaurant;
     }
 
@@ -36,6 +37,7 @@ public class RestaurantMapper {
         dto.setName(restaurant.getName());
         dto.setAddressId(restaurant.getAddress().getId());
         dto.setTypeOfCuisine(String.valueOf(restaurant.getTypeOfCuisine()));
+        dto.setAverageRating(restaurant.getAverageRating());
         return dto;
     }
 

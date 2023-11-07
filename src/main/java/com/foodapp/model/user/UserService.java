@@ -29,38 +29,12 @@ public class UserService {
         return userRepository.findUserByEmail(email).map(userMapper::map);
     }
 
-    public Optional<User> findUser(String email){
-        return userRepository.findUserByEmail(email);
-    }
-
     @Transactional
     public void register(UserRegistrationDTO dto) {
         Address address = setInitialAddressData(dto);
         User user = setInitialUserData(dto, address);
         addressRepository.save(address);
         userRepository.save(user);
-    }
-
-    private User setInitialUserData(UserRegistrationDTO dto, Address address) {
-        User user = new User();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setAddress(address);
-        String hashed = passwordEncoder.encode(dto.getPassword());
-        user.setPassword(hashed);
-        user.setExtraPoints(0.0);
-        return user;
-    }
-
-    private static Address setInitialAddressData(UserRegistrationDTO dto) {
-        Address address = new Address();
-        address.setCity(dto.getCity());
-        address.setStreet(dto.getStreet());
-        address.setHomeNo(dto.getHomeNo());
-        address.setFlatNo(dto.getFlatNo());
-        address.setPostalCode(dto.getPostalCode());
-        return address;
     }
 
     @Transactional
@@ -73,6 +47,11 @@ public class UserService {
             throw new IllegalArgumentException("Wrong current password");
         }
     }
+
+
+    /**
+     Helper methods for find logged User and find his extra points
+     */
 
     public User getLoggedInUser( ){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -88,5 +67,32 @@ public class UserService {
         String email = loggedInUser.getEmail();
         User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return user.getExtraPoints();
+    }
+
+
+    /**
+     Helper methods for register new User
+     */
+
+    private User setInitialUserData(UserRegistrationDTO dto, Address address) {
+        User user = new User();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setAddress(address);
+        String hashed = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(hashed);
+        user.setExtraPoints(0.0);
+        return user;
+    }
+
+    private Address setInitialAddressData(UserRegistrationDTO dto) {
+        Address address = new Address();
+        address.setCity(dto.getCity());
+        address.setStreet(dto.getStreet());
+        address.setHomeNo(dto.getHomeNo());
+        address.setFlatNo(dto.getFlatNo());
+        address.setPostalCode(dto.getPostalCode());
+        return address;
     }
 }

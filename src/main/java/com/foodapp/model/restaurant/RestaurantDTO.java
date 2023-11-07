@@ -10,4 +10,5 @@ public class RestaurantDTO {
     private String name;
     private Long addressId;
     private String typeOfCuisine;
+    private Double averageRating;
 }

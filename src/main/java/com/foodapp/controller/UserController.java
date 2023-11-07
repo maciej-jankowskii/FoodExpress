@@ -25,23 +25,29 @@ public class UserController {
         this.addressService = addressService;
     }
 
+    /**
+     Handling registration requests
+     */
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         UserRegistrationDTO user = new UserRegistrationDTO();
         model.addAttribute("user", user);
         return "/home/register-form";
     }
-
     @PostMapping("/register")
     public String register(UserRegistrationDTO dto) {
         userService.register(dto);
         return "redirect:/confirmation-reg";
     }
-
     @GetMapping("confirmation-reg")
     public String regConfirmation() {
         return "/home/registration-confirmation";
     }
+
+    /**
+     Handling loggin and home page requests
+     */
 
     @GetMapping("/login")
     public String loginForm() {
@@ -56,6 +62,10 @@ public class UserController {
         return "home/home-page";
     }
 
+    /**
+     Handling requests available in the user's profile
+     */
+
     @GetMapping("/profile")
     public String profileForm(Model model) {
         try {
@@ -66,12 +76,6 @@ public class UserController {
             return "redirect:/user-error";
         }
     }
-
-    @GetMapping("user-error")
-    public String userError(){
-        return "error/user-error";
-    }
-
     @PostMapping("/change-address")
     public String changeAddress(@ModelAttribute("addressDTO") AddressDTO addressDTO, Principal principal){
 
@@ -82,11 +86,6 @@ public class UserController {
             return "redirect:/address-error";
         }
         return "redirect:/confirmation-address";
-    }
-
-    @GetMapping("confirmation-address")
-    public String addressConfirmation(){
-        return "user-profile/change-address-confirmation";
     }
 
     @PostMapping("/change-password")
@@ -102,9 +101,22 @@ public class UserController {
         return "redirect:/confirmation-password";
     }
 
+    @GetMapping("confirmation-address")
+    public String addressConfirmation(){
+        return "user-profile/change-address-confirmation";
+    }
+
     @GetMapping("/confirmation-password")
     public String passwordConfirmation(){
         return "user-profile/change-password-confirmation";
     }
 
+    /**
+     Handling errors
+     */
+
+    @GetMapping("user-error")
+    public String userError(){
+        return "error/user-error";
+    }
 }

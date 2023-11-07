@@ -8,11 +8,9 @@ import java.util.NoSuchElementException;
 public class DishService {
 
     private final DishRepository dishRepository;
-    private final DishMapper dishMapper;
 
-    public DishService(DishRepository dishRepository, DishMapper dishMapper) {
+    public DishService(DishRepository dishRepository) {
         this.dishRepository = dishRepository;
-        this.dishMapper = dishMapper;
     }
 
     public Dish findDishById(Long id){

@@ -1,18 +1,19 @@
 package com.foodapp.model.rating;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Service;
 
-@Mapper
-public interface RatingMapper {
-    RatingMapper INSTANCE = Mappers.getMapper(RatingMapper.class);
 
-    @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "restaurantId", source = "restaurant.id")
-    RatingDTO ratingToDTO(Rating rating);
+@Service
+public class RatingMapper {
+    public RatingDTO map(Rating rating){
+        RatingDTO dto = new RatingDTO();
+        dto.setUserId(rating.getUser().getId());
+        dto.setRestaurantId(rating.getRestaurant().getId());
+        dto.setValue(rating.getValue());
+        dto.setDateAdded(rating.getDateAdded());
+        dto.setDescription(rating.getDescription());
+        return dto;
+    }
 
-    @Mapping(target = "user.id", source = "userId")
-    @Mapping(target = "restaurant.id", source = "restaurantId")
-    Rating dtoToRating(RatingDTO ratingDTO);
+
 }

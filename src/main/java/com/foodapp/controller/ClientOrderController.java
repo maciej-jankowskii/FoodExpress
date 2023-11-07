@@ -7,6 +7,7 @@ import com.foodapp.model.order.Order;
 import com.foodapp.model.order.OrderRepository;
 import com.foodapp.model.order.OrderService;
 import com.foodapp.model.rating.Rating;
+import com.foodapp.model.rating.RatingService;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantService;
 import com.foodapp.model.user.User;
@@ -28,26 +29,29 @@ import java.util.NoSuchElementException;
 public class ClientOrderController {
 
     private final OrderService orderService;
-    private final DishService dishService;
     private final UserService userService;
     private final RestaurantService restaurantService;
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
+    private final RatingService ratingService;
 
 
-    public ClientOrderController(OrderService orderService, DishService dishService, UserService userService, RestaurantService restaurantService, OrderRepository orderRepository, UserRepository userRepository) {
+    public ClientOrderController(OrderService orderService, UserService userService,
+                                 RestaurantService restaurantService, OrderRepository orderRepository, RatingService ratingService) {
         this.orderService = orderService;
-        this.dishService = dishService;
         this.userService = userService;
         this.restaurantService = restaurantService;
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
+        this.ratingService = ratingService;
     }
+
+    /**
+     Handling order and payments requests
+     */
 
     @GetMapping("/order")
     public String orderForm(Model model) {
         List<Restaurant> restaurants = restaurantService.findAllRestaurants();
-        orderService.calculateAndSetRatings(restaurants);
+        ratingService.calculateAndSetRatings(restaurants);
         model.addAttribute("restaurants", restaurants);
         return "/order/restaurants";
     }
@@ -83,7 +87,6 @@ public class ClientOrderController {
         } catch (NoSuchElementException e) {
             return "redirect:/restaurant-error";
         }
-
     }
 
     @GetMapping("/order-summary")
@@ -123,18 +126,16 @@ public class ClientOrderController {
         }
     }
 
-    @GetMapping("/not-enough-points")
-    public String notEnoughPointsError(){
-        return "error/not-enough-points";
-    }
-
     @GetMapping("/place-order")
     public String placeOrder(HttpSession session){
         Order order = (Order) session.getAttribute("order");
         orderService.placeOrder(session);
         return "order/payment-success";
-
     }
+
+    /**
+     Handling history of orders and rating requests
+     */
 
     @GetMapping("/my-orders")
     public String myOrdersForm(Model model){
@@ -147,11 +148,24 @@ public class ClientOrderController {
     @PostMapping("/add-rating")
     public String addRating(@RequestParam("orderId") Long orderId, Rating rating){
         try {
-            orderService.addRating(orderId, rating);
+            ratingService.addRating(orderId, rating);
             return "redirect:/my-orders";
         }catch (NoSuchElementException e){
             return "redirect:/order-error";
         }
+    }
+
+    /**
+     Handling errors
+     */
+
+    @GetMapping("/restaurant-error")
+    public String restaurantErrorForm(){
+        return "error/restaurant-error";
+    }
+    @GetMapping("/not-enough-points")
+    public String notEnoughPointsErrorForm(){
+        return "error/not-enough-points";
     }
     @GetMapping("/order-error")
     public String orderErrorForm(){

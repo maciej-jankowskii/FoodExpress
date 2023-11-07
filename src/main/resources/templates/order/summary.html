@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Podsumowanie Zamówienia</title>
+  <title>Podsumowanie zamówienia</title>
   <style>
     body {
       background-image: url('/img/knifefork.jpg');
@@ -39,15 +39,6 @@
 
     .cart-summary {
       font-size: 17px;
-    }
-
-    .dish {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-      padding: 5px 0;
-      border-bottom: 1px solid #ccc;
     }
 
     .dish span:first-child {
@@ -107,7 +98,7 @@
 </div>
 <div class="main-content">
   <div class="cart-summary">
-    <h2>Podsumowanie Zamówienia</h2>
+    <h2>Podsumowanie zamówienia</h2>
     <ul>
       <form th:each="dish : ${session.order.dishes}" th:object="${dish}" th:action="@{'/remove-from-cart/' + ${dish.id}}" method="post">
         <span th:text="${dish.name}"></span>  <span th:text="${dish.price}"></span> PLN

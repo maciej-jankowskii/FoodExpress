@@ -20,12 +20,13 @@ public class AddressService {
     }
 
     @Transactional
-    public void addAddressForUser(String email, AddressDTO addressDTO){
+    public AddressDTO addAddressForUser(String email, AddressDTO addressDTO){
         User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Address address = createNewAddress(addressDTO);
         user.setAddress(address);
         addressRepository.save(address);
         userRepository.save(user);
+        return addressMapper.map(address);
     }
 
     private Address createNewAddress(AddressDTO addressDTO){
