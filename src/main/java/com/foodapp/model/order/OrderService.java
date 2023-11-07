@@ -3,10 +3,6 @@ package com.foodapp.model.order;
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishRepository;
 import com.foodapp.model.enums.OrderStatus;
-import com.foodapp.model.rating.Rating;
-import com.foodapp.model.rating.RatingDTO;
-import com.foodapp.model.rating.RatingMapper;
-import com.foodapp.model.rating.RatingRepository;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantRepository;
 import com.foodapp.model.user.User;
@@ -23,7 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class OrderService {
+public class OrderService implements ExtraPointsCalculator {
     private final static Double EXTRA_POINT_TO_PLN = 0.1;
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
@@ -78,7 +74,7 @@ public class OrderService {
         User user = userService.getLoggedInUser();
         Double points = calculateExtraPoints(user);
 
-        if (totalCost.doubleValue() < points) {
+        if (totalCost.doubleValue() <= points) {
             order.setOrderStatus(OrderStatus.ZAŁOŻONE);
             orderRepository.save(order);
             calculateNewValueOfExtraPoints(order, totalCost, user);
@@ -113,18 +109,19 @@ public class OrderService {
     /**
     Helper methods to calculate User ExtraPoints
      */
-
-    public Double calculateExtraPoints(User user){
+    @Override
+    public Double calculateExtraPoints(User user) {
         return EXTRA_POINT_TO_PLN * user.getExtraPoints();
     }
 
-    public BigDecimal calculateExtraPointsForOrder(Order order){
+    @Override
+    public BigDecimal calculateExtraPointsForOrder(Order order) {
         BigDecimal orderTotalCost = calculateTotalCost(order.getDishes());
         return orderTotalCost.multiply(BigDecimal.valueOf(EXTRA_POINT_TO_PLN));
     }
 
     private void calculateNewValueOfExtraPoints(Order order, BigDecimal totalCost, User user) {
-        user.setExtraPoints(user.getExtraPoints() - totalCost.doubleValue());
+        user.setExtraPoints(calculateExtraPoints(user) - totalCost.doubleValue());
         BigDecimal additionalPoints = calculateExtraPointsForOrder(order);
         user.setExtraPoints(user.getExtraPoints() + additionalPoints.doubleValue());
     }

@@ -28,7 +28,7 @@ class AddressServiceTest {
     }
 
     @Test
-    @DisplayName("Should add address")
+    @DisplayName("Should add address without exceptions")
     public void addAddressForUser_Success_Test(){
         AddressDTO dto = new AddressDTO();
         Address address = new Address();
@@ -50,7 +50,7 @@ class AddressServiceTest {
     }
 
     @Test
-    @DisplayName("Should thorw exception")
+    @DisplayName("When a address is added, an exception should be thrown")
     public void addAddressForUser_Exception_Test(){
         AddressDTO addressDTO = new AddressDTO();
         String email = "test@example.com";
