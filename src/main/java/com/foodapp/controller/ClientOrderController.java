@@ -136,7 +136,8 @@ public class ClientOrderController {
 
     @GetMapping("/my-orders")
     public String myOrdersForm(Model model){
-        List<Order> allOrders = orderService.findAllByStatus(OrderStatus.ZAŁOŻONE);
+        User user = userService.getLoggedInUser();
+        List<Order> allOrders = orderService.findAllByStatus(OrderStatus.ZAŁOŻONE, user);
         model.addAttribute("allOrders", allOrders);
         return "order/my-orders";
     }

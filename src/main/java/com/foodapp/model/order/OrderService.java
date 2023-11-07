@@ -35,8 +35,8 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    public List<Order> findAllByStatus(OrderStatus status){
-        return orderRepository.findAllByOrderStatus(status);
+    public List<Order> findAllByStatus(OrderStatus status, User user){
+        return orderRepository.findAllByOrderStatusAndUser(status, user);
     }
     @Transactional
     public Order createOrder(Long dishId, HttpSession session){
@@ -100,6 +100,8 @@ public class OrderService {
             order.setOrderStatus(OrderStatus.ZAŁOŻONE);
             orderRepository.save(order);
             user.setExtraPoints(user.getExtraPoints() - totalCost.doubleValue());
+            BigDecimal additionalPoints = calculateExtraPointsForOrder(order);
+            user.setExtraPoints(user.getExtraPoints() + additionalPoints.doubleValue());
             userRepository.save(user);
             session.removeAttribute("order");
             return true;

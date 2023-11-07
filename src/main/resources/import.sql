@@ -46,4 +46,4 @@ INSERT INTO dishes (name, description, price, restaurant_id) VALUES
 ('Ciasto czekoladowe', 'Deser z czekoladą i lodami', 9.99,6);
 
 INSERT INTO users(first_name, last_name, email, password, extra_points, address_id) VALUES
-('Jan', 'Nowak', 'nowak@example.com', '{bcrypt}$2a$10$ekPcaMnn28t7GP7GSGcF3uhe2xx3YVMr.FrC1B/kUkzw2/UM0Anm2', 10000.0, 7);
+('Jan', 'Nowak', 'nowak@example.com', '{bcrypt}$2a$10$ekPcaMnn28t7GP7GSGcF3uhe2xx3YVMr.FrC1B/kUkzw2/UM0Anm2', 1000.0, 7);
