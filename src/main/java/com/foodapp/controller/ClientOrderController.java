@@ -6,6 +6,7 @@ import com.foodapp.model.enums.OrderStatus;
 import com.foodapp.model.order.Order;
 import com.foodapp.model.order.OrderRepository;
 import com.foodapp.model.order.OrderService;
+import com.foodapp.model.rating.Rating;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantService;
 import com.foodapp.model.user.User;
@@ -46,6 +47,7 @@ public class ClientOrderController {
     @GetMapping("/order")
     public String orderForm(Model model) {
         List<Restaurant> restaurants = restaurantService.findAllRestaurants();
+        orderService.calculateAndSetRatings(restaurants);
         model.addAttribute("restaurants", restaurants);
         return "/order/restaurants";
     }
@@ -141,6 +143,21 @@ public class ClientOrderController {
         model.addAttribute("allOrders", allOrders);
         return "order/my-orders";
     }
+
+    @PostMapping("/add-rating")
+    public String addRating(@RequestParam("orderId") Long orderId, Rating rating){
+        try {
+            orderService.addRating(orderId, rating);
+            return "redirect:/my-orders";
+        }catch (NoSuchElementException e){
+            return "redirect:/order-error";
+        }
+    }
+    @GetMapping("/order-error")
+    public String orderErrorForm(){
+        return "error/order-error";
+    }
+
 }
 
 

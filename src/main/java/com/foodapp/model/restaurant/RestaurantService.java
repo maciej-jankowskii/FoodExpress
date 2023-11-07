@@ -1,5 +1,6 @@
 package com.foodapp.model.restaurant;
 
+import com.foodapp.model.rating.Rating;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,15 +15,15 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public Restaurant findById(Long id){
+    public Restaurant findById(Long id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Restaurant not found"));
     }
 
-    public Restaurant findByDishId(Long dishId){
+    public Restaurant findByDishId(Long dishId) {
         return restaurantRepository.findRestaurantByDishId(dishId).orElseThrow();
     }
 
-    public List<Restaurant> findAllRestaurants(){
+    public List<Restaurant> findAllRestaurants() {
         return restaurantRepository.findAll();
     }
 }

@@ -2,6 +2,7 @@ package com.foodapp.model.order;
 
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.enums.OrderStatus;
+import com.foodapp.model.rating.Rating;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.user.User;
 import jakarta.persistence.*;
@@ -35,5 +36,9 @@ public class Order {
     private BigDecimal totalCost;
     private OrderStatus orderStatus;
     private LocalDate orderDate;
+    @ManyToOne
+    @JoinColumn(name = "rating_id")
+    private Rating rating;
+    private Boolean rated;
 
 }

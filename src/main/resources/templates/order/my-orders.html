@@ -66,6 +66,19 @@
         .button:hover {
             background-color: rgba(0, 123, 255, 1);
         }
+        select {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -81,12 +94,28 @@
                 <th>Data zamówienia</th>
                 <th>Suma zamówienia</th>
                 <th>Restauracja</th>
+                <th>Twoja ocena</th>
             </tr>
             <tr th:each="order : ${allOrders}">
                 <td th:text="${order.id}"></td>
                 <td th:text="${order.orderDate}"></td>
-                <td th:text="${order.totalCost} + ' PLN'">100</td>
+                <td th:text="${order.totalCost} + ' PLN'"></td>
                 <td th:text="${order.restaurant.name}"></td>
+                <td>
+                    <form th:action="@{/add-rating}" method="post">
+                        <input type="hidden" name="orderId" th:value="${order.id}">
+                        <select name="value" th:disabled="${order.rated}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <input type="text" name="description" placeholder="Dodaj komentarz">
+                        <button type="submit" class="button" th:hidden="${order.rated}" th:disabled="${order.rated}">Dodaj ocenę</button>
+                    </form>
+                    <p th:if="${order.rated}">Ocena została już wystawiona.</p>
+                </td>
             </tr>
         </table>
     </div>

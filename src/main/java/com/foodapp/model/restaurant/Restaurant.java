@@ -27,11 +27,9 @@ public class Restaurant {
     private Address address;
     @Enumerated(EnumType.STRING)
     private Cuisine typeOfCuisine;
-    @ManyToMany
-    @JoinTable(name = "restaurant_rating",
-    joinColumns = @JoinColumn(name = "restaurant_id"),
-    inverseJoinColumns = @JoinColumn(name = "rating_id"))
+    @OneToMany(mappedBy = "restaurant")
     private List<Rating> ratings = new ArrayList<>();
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Dish> dishes = new ArrayList<>();
+    private Double averageRating;
 }

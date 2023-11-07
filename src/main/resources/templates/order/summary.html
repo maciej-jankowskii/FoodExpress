@@ -127,7 +127,7 @@
       Suma: <span th:text="${session.order.totalCost}"></span> PLN
     </div>
     <div class="payment-buttons">
-      <a th:href="@{pay-with-points}" class="button">Zapłać punktami</a>
+      <a th:href="@{/pay-with-points}" class="button">Zapłać punktami</a>
       <a th:href="@{/place-order}" class="button">Złóż zamówienie i zapłać przy odbiorze</a>
       <a th:href="@{/restaurant/menu/{restaurantId}(restaurantId=${order.getRestaurant().getId()})}" class="button">Powrót do menu restauracji</a>
     </div>
