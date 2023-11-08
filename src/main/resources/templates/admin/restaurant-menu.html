@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodApp - Aplikacja do zamawiania jedzenia</title>
+    <title>FoodApp - Edytuj Menu Restauracji</title>
     <style>
         body {
             background-image: url('/img/knifefork.jpg');
@@ -34,22 +34,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-        .restaurant {
-            background-color: rgba(0, 123, 255, 0.3);
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .restaurant h3 {
-            margin: 0;
-        }
-
-        .restaurant p {
-            margin: 5px 0;
-        }
-
         .button-container {
             margin: 20px 0;
         }
@@ -73,29 +57,26 @@
 </head>
 <body>
 <div class="header">
-    <h1>FoodApp - Panel administratora</h1>
+    <h1>FoodApp - Edytuj Menu Restauracji: <span th:text="${restaurant.name}"></span></h1>
 </div>
 <div class="main-content">
-    <h1>Lista Restauracji</h1>
     <ul style="list-style-type: none">
-        <li th:each="restaurant : ${restaurants}" class="restaurant">
-            <h3 th:text="${restaurant.name}"></h3>
-            <p>
-                <span th:text="${restaurant.address.city}"></span>,
-                <span th:text="${restaurant.address.street}"></span>
-                <span th:text="${restaurant.address.homeNo}"></span>
-                <span>/</span>
-                <span th:text="${restaurant.address.flatNo}"></span>
-            </p>
-            <p>Ocena: <span th:text="${restaurant.averageRating}"></span></p>
-            <p>Typ kuchni: <span th:text="${restaurant.typeOfCuisine}"></span></p>
-            <form th:action="@{'/admin/delete-restaurant/' + ${restaurant.id}}" method="post">
-                <button type="submit" class="button">Usuń</button>
-            </form>
-            <a class="button" th:href="@{'/admin/edit-menu/' + ${restaurant.id}}">Modyfikuj menu</a>
+        <li th:each="dish : ${dishes}" class="dish">
+            <h3 th:text="${dish.name}"></h3>
+            <p>Cena: <span th:text="${dish.price}"></span> zł</p>
+            <p>Opis: <span th:text="${dish.description}"></span></p>
+            <div class="button-container">
+                <a class="button" th:href="@{'/admin/edit-dish/' + ${restaurant.id} + '/' + ${dish.id}}">Edytuj Posiłek</a>
+                <a class="button" th:href="@{'/admin/delete-dish/' + ${dish.id}}">Usuń Posiłek</a>
+            </div>
         </li>
     </ul>
-    <a class="button" th:href="@{/admin-panel}">Powrót</a>
+    <p>__________________________</p>
+    <div class="button-container">
+        <a class="button" th:href="@{'/admin/add-dish/' + ${restaurant.id}}">Dodaj nowe danie</a>
+        <a class="button" th:href="@{'/admin/delete-restaurant/' + ${restaurant.id}}">Usuń Restaurację</a>
+        <a class="button" th:href="@{/restaurants}">Powrót</a>
+    </div>
 </div>
 </body>
 </html>
