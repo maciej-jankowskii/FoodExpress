@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .requestMatchers(mvc.pattern("/confirmation-reg")).permitAll()
                 .requestMatchers(mvc.pattern("/reg-error")).permitAll()
                 .requestMatchers(mvc.pattern("/admin-panel")).hasRole("AdminRole")
+                .requestMatchers(mvc.pattern("/admin/**")).hasRole("AdminRole")
                 .anyRequest().authenticated()
         );
 

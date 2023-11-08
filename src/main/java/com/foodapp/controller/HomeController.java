@@ -11,4 +11,9 @@ public class HomeController {
         return "home/index";
     }
 
+    @GetMapping("/admin-panel")
+    public String adminPanelForm(){
+        return "admin/admin-panel";
+    }
+
 }

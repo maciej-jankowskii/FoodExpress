@@ -26,4 +26,7 @@ public class RestaurantService {
     public List<Restaurant> findAllRestaurants() {
         return restaurantRepository.findAll();
     }
+    public void deleteRestaurantById(Long id){
+        restaurantRepository.deleteById(id);
+    }
 }
