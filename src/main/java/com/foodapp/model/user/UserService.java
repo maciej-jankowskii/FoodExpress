@@ -1,5 +1,6 @@
 package com.foodapp.model.user;
 
+import com.foodapp.exception.EmailAlreadyExistsException;
 import com.foodapp.model.address.Address;
 import com.foodapp.model.address.AddressRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +32,10 @@ public class UserService {
 
     @Transactional
     public void register(UserRegistrationDTO dto) {
+        if (userRepository.existsByEmail(dto.getEmail())){
+            throw new EmailAlreadyExistsException("Email address already exists");
+        }
+
         Address address = setInitialAddressData(dto);
         User user = setInitialUserData(dto, address);
         addressRepository.save(address);

@@ -1,5 +1,6 @@
 package com.foodapp.controller;
 
+import com.foodapp.exception.EmailAlreadyExistsException;
 import com.foodapp.model.address.AddressDTO;
 import com.foodapp.model.address.AddressService;
 import com.foodapp.model.user.UserRegistrationDTO;
@@ -37,8 +38,12 @@ public class UserController {
     }
     @PostMapping("/register")
     public String register(UserRegistrationDTO dto) {
-        userService.register(dto);
-        return "redirect:/confirmation-reg";
+        try {
+            userService.register(dto);
+            return "redirect:/confirmation-reg";
+        } catch (EmailAlreadyExistsException e){
+            return "redirect:/reg-error";
+        }
     }
     @GetMapping("confirmation-reg")
     public String regConfirmation() {
@@ -118,5 +123,9 @@ public class UserController {
     @GetMapping("user-error")
     public String userError(){
         return "error/user-error";
+    }
+    @GetMapping("reg-error")
+    public String registerErrorForm(){
+        return "/error/reg-error";
     }
 }

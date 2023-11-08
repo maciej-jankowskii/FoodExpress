@@ -72,7 +72,7 @@ class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("When the order is created, a no restaurant exception should be thrown")
+    @DisplayName("When the order is created, no restaurant exception should be thrown")
     public void createOrder_No_Restaurant_Exception_Test() {
         HttpSession session = mock(HttpSession.class);
         Long dishId = 1L;
@@ -83,7 +83,7 @@ class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("When the order is created, a no dish exception should be thrown")
+    @DisplayName("When the order is created, no dish exception should be thrown")
     public void createOrder_No_Dish_Exception_Test() {
         HttpSession session = mock(HttpSession.class);
         Long dishId = 1L;

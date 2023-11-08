@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .requestMatchers(mvc.pattern("/img/**")).permitAll()
                 .requestMatchers(mvc.pattern("/register")).permitAll()
                 .requestMatchers(mvc.pattern("/confirmation-reg")).permitAll()
+                .requestMatchers(mvc.pattern("/reg-error")).permitAll()
                 .anyRequest().authenticated()
         );
 

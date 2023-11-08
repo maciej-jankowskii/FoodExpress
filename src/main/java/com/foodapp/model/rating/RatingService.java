@@ -50,6 +50,7 @@ public class RatingService {
         restaurant.getRatings().add(rating);
         order.setRating(rating);
         order.setRated(true);
+
     }
 
     public void calculateAndSetRatings(List<Restaurant> restaurants){
