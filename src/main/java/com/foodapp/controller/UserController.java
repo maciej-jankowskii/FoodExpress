@@ -3,6 +3,7 @@ package com.foodapp.controller;
 import com.foodapp.exception.EmailAlreadyExistsException;
 import com.foodapp.model.address.AddressDTO;
 import com.foodapp.model.address.AddressService;
+import com.foodapp.model.user.User;
 import com.foodapp.model.user.UserRegistrationDTO;
 import com.foodapp.model.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -60,10 +61,12 @@ public class UserController {
     }
 
     @GetMapping("/home-page")
-    public String homeForm(Authentication authentication, Model model) {
-        String username = authentication.getName();
-        model.addAttribute("username", username);
-        model.addAttribute("welcomeMessage", "Witaj, " + username + "!");
+    public String homeForm(Model model) {
+        User user = userService.getLoggedInUser();
+        model.addAttribute("user", user);
+        model.addAttribute("username", user.getFirstName());
+        model.addAttribute("welcomeMessage", "Witaj " + user.getFirstName() + "!");
+        model.addAttribute("isAdmin", userService.isAdmin());
         return "home/home-page";
     }
 

@@ -58,10 +58,11 @@
 <body>
 <div class="header" >
     <h1>FoodApp</h1>
-    <p th:text="${welcomeMessage}">Witaj, [nazwa użytkownika]!</p>
+    <p th:text="${welcomeMessage}">Witaj [nazwa użytkownika]!</p>
 </div>
 <div class="main-content">
     <div class="button-container">
+        <a class="button" th:if="${isAdmin}" th:href="@{/admin-panel}">Panel administratora</a>
         <a class="button" th:href="@{/profile}">Profil użytkownika</a>
         <a class="button" th:href="@{/order}">Zamów jedzenie</a>
         <a class="button" th:href="@{/my-orders}">Moje zamówienia</a>

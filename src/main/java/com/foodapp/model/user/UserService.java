@@ -10,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -18,12 +20,15 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
+    private final UserRoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder,
+                       AddressRepository addressRepository, UserRoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
+        this.roleRepository = roleRepository;
     }
 
     public Optional<UserDTO> findUserByEmail(String email) {
@@ -51,6 +56,10 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("Wrong current password");
         }
+    }
+
+    public boolean isAdmin(){
+        return getLoggedInUser().getRoles().stream().anyMatch(role -> role.getName().equals("AdminRole"));
     }
 
 
@@ -88,7 +97,17 @@ public class UserService {
         String hashed = passwordEncoder.encode(dto.getPassword());
         user.setPassword(hashed);
         user.setExtraPoints(0.0);
+        setNewRole(user);
         return user;
+    }
+
+    private void setNewRole(User user) {
+        Optional<UserRole> optionalRole = roleRepository.findByName("UserRole");
+        if (optionalRole.isPresent()){
+            UserRole role = optionalRole.get();
+            user.getRoles().add(role);
+        }
+        userRepository.save(user);
     }
 
     private Address setInitialAddressData(UserRegistrationDTO dto) {

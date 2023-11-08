@@ -2,6 +2,9 @@ package com.foodapp.model.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class UserMapper {
 
@@ -12,6 +15,8 @@ public class UserMapper {
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setExtraPoints(user.getExtraPoints());
+        Set<String> roles = user.getRoles().stream().map(UserRole::getName).collect(Collectors.toSet());
+        dto.setRoles(roles);
         return dto;
     }
 

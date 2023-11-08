@@ -6,6 +6,13 @@ INSERT INTO addresses (street, home_no, flat_no, city, postal_code) VALUES
 ('ul. Jedzeniowa', '20','10', 'Wrocław', '50-005'),
 ('ul. Smakowita', '2','3', 'Łódź', '90-006'),
 ('ul. Testowa', '1', '1', 'Test', '00-001');
+INSERT INTO users(first_name, last_name, email, password, extra_points, address_id) VALUES
+('Jan', 'Nowak', 'nowak@example.com', '{bcrypt}$2a$10$ekPcaMnn28t7GP7GSGcF3uhe2xx3YVMr.FrC1B/kUkzw2/UM0Anm2', 1000.0, 7);
+INSERT INTO user_role(name) VALUES
+('UserRole'),
+('AdminRole');
+INSERT INTO user_roles(user_id, role_id) VALUES
+(1,2);
 INSERT INTO restaurants (name, address_id, type_of_cuisine) VALUES
 ('Restauracja Polska Smakołyk', 1, 'POLSKA'),
 ('Trattoria Bella Italia', 2, 'WŁOSKA'),
@@ -44,6 +51,3 @@ INSERT INTO dishes (name, description, price, restaurant_id) VALUES
 ('Koktajl owocowy', 'Świeży koktajl owocowy', 5.99,6),
 ('Risotto z grzybami', 'Risotto z grzybami i parmezanem', 16.99,6),
 ('Ciasto czekoladowe', 'Deser z czekoladą i lodami', 9.99,6);
-
-INSERT INTO users(first_name, last_name, email, password, extra_points, address_id) VALUES
-('Jan', 'Nowak', 'nowak@example.com', '{bcrypt}$2a$10$ekPcaMnn28t7GP7GSGcF3uhe2xx3YVMr.FrC1B/kUkzw2/UM0Anm2', 1000.0, 7);

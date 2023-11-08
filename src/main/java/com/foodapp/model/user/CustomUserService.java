@@ -26,6 +26,7 @@ public class CustomUserService implements UserDetailsService {
         return User.builder()
                 .username(userDTO.getEmail())
                 .password(userDTO.getPassword())
+                .roles(userDTO.getRoles().toArray(String[]::new))
                 .build();
     }
 }
