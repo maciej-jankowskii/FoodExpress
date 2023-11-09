@@ -23,6 +23,7 @@ class UserServiceTest {
     @Mock private UserMapper userMapper;
     @Mock private PasswordEncoder passwordEncoder;
     @Mock private AddressRepository addressRepository;
+    @Mock private UserRoleRepository userRoleRepository;
     @InjectMocks private UserService userService;
 
     @BeforeEach
@@ -56,17 +57,20 @@ class UserServiceTest {
         dto.setEmail(email);
         dto.setPassword("password");
         User user = new User();
+        UserRole role = new UserRole();
         Address address = new Address();
 
 
 
         when(userRepository.existsByEmail(email)).thenReturn(false);
         when(passwordEncoder.encode(dto.getPassword())).thenReturn(hashedPassword);
+        when(userRoleRepository.findByName("UserRole")).thenReturn(Optional.of(role));
+        when(userRepository.save(user)).thenReturn(user);
         when(addressRepository.save(address)).thenReturn(address);
         when(userRepository.save(user)).thenReturn(user);
         userService.register(dto);
 
-        verify(userRepository, times(1)).save(argThat(user1 -> {
+        verify(userRepository, times(2)).save(argThat(user1 -> {
             return user1.getFirstName().equals(dto.getFirstName()) &&
                     user1.getLastName().equals(dto.getLastName()) &&
                     user1.getEmail().equals(dto.getEmail()) &&

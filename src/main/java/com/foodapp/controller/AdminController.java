@@ -6,7 +6,6 @@ import com.foodapp.model.dish.DishDTO;
 import com.foodapp.model.dish.DishService;
 import com.foodapp.model.order.Order;
 import com.foodapp.model.order.OrderService;
-import com.foodapp.model.rating.RatingService;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantDTO;
 import com.foodapp.model.restaurant.RestaurantService;
@@ -26,14 +25,13 @@ public class AdminController {
     private final RestaurantService restaurantService;
     private final DishService dishService;
     private final OrderService orderService;
-    private final RatingService ratingService;
     private final UserService userService;
 
-    public AdminController(RestaurantService restaurantService, DishService dishService, OrderService orderService, RatingService ratingService, UserService userService) {
+    public AdminController(RestaurantService restaurantService, DishService dishService,
+                           OrderService orderService, UserService userService) {
         this.restaurantService = restaurantService;
         this.dishService = dishService;
         this.orderService = orderService;
-        this.ratingService = ratingService;
         this.userService = userService;
     }
 
@@ -125,7 +123,6 @@ public class AdminController {
         return "redirect:/admin/restaurants";
     }
 
-
     /**
      Handling requests related to ratings
      */
@@ -137,7 +134,6 @@ public class AdminController {
         return "admin/manage-ratings";
 
     }
-
 
     /**
      Handling requests related to users

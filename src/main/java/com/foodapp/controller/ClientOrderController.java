@@ -2,7 +2,6 @@ package com.foodapp.controller;
 
 import com.foodapp.exception.MinimumOrderValueException;
 import com.foodapp.model.dish.Dish;
-import com.foodapp.model.dish.DishService;
 import com.foodapp.model.enums.OrderStatus;
 import com.foodapp.model.order.Order;
 import com.foodapp.model.order.OrderRepository;
@@ -12,7 +11,6 @@ import com.foodapp.model.rating.RatingService;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantService;
 import com.foodapp.model.user.User;
-import com.foodapp.model.user.UserRepository;
 import com.foodapp.model.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

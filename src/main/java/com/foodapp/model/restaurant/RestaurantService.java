@@ -7,8 +7,6 @@ import com.foodapp.model.address.AddressRepository;
 import com.foodapp.model.enums.Cuisine;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
