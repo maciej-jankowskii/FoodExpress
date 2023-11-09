@@ -3,6 +3,7 @@ package com.foodapp.model.dish;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
@@ -32,7 +33,7 @@ public class DishService {
     public void deleteDishById(Long dishId){
         dishRepository.deleteById(dishId);
     }
-
+    @Transactional
     public DishDTO addNewDish(Long restaurantId, DishDTO dto){
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new NoSuchElementException("Restaurant not found"));

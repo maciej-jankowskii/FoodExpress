@@ -9,4 +9,5 @@ import java.util.List;
 public interface DishRepository extends CrudRepository<Dish, Long> {
 
     List<Dish> findAll();
+    List<Dish> findAllByRestaurantId(Long id);
 }

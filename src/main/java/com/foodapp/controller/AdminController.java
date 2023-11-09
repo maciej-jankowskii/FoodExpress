@@ -1,9 +1,11 @@
 package com.foodapp.controller;
 
+import com.foodapp.model.address.AddressDTO;
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishDTO;
 import com.foodapp.model.dish.DishService;
 import com.foodapp.model.restaurant.Restaurant;
+import com.foodapp.model.restaurant.RestaurantDTO;
 import com.foodapp.model.restaurant.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,7 +102,17 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/add-restaurant")
+    public String addRestaurantForm(){
+        return "admin/add-restaurant";
+    }
 
+    @PostMapping("/add-restaurant")
+    public String addNewRestaurant(@ModelAttribute("addressDTO")AddressDTO addressDTO,
+                                   @ModelAttribute("restaurantDTO")RestaurantDTO restaurantDTO){
+        restaurantService.addNewRestaurant(restaurantDTO, addressDTO);
+        return "redirect:/admin/restaurants";
+    }
 
 
     /**
