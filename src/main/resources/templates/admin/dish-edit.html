@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodApp - Edytuj Menu Restauracji</title>
+  <style>
+    body {
+      background-image: url('/img/knifefork.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    .header {
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .main-content {
+      margin: 20px;
+      padding: 20px;
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-container {
+      margin: 20px 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: rgba(0, 123, 255, 1);
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container {
+      width: 50%;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>FoodApp - Edytuj posiłek:</h1>
+</div>
+<div class="main-content">
+  <form class="form-container" th:object="${dish}" th:action="@{'/admin/edit-dish/' + ${dish.id}}" method="post">
+    <label>Nazwa dania: <input class="form-input"  type="text" th:field="*{name}" /></label>
+    <label>Cena: <input class="form-input"  type="text" th:field="*{price}" /></label>
+    <label>Opis: <textarea class="form-input"  th:field="*{description}"></textarea></label>
+    <button type="submit" class="button">Zapisz zmiany</button>
+  </form>
+
+  <a class="button" th:href="@{/admin/restaurants}">Powrót</a>
+  </div>
+</div>
+</body>
+</html>

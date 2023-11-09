@@ -1,14 +1,13 @@
 package com.foodapp.controller;
 
 import com.foodapp.model.dish.Dish;
+import com.foodapp.model.dish.DishDTO;
+import com.foodapp.model.dish.DishService;
 import com.foodapp.model.restaurant.Restaurant;
 import com.foodapp.model.restaurant.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,9 +17,11 @@ import java.util.NoSuchElementException;
 public class AdminController {
 
     private final RestaurantService restaurantService;
+    private final DishService dishService;
 
-    public AdminController(RestaurantService restaurantService) {
+    public AdminController(RestaurantService restaurantService, DishService dishService) {
         this.restaurantService = restaurantService;
+        this.dishService = dishService;
     }
 
     /**
@@ -51,6 +52,34 @@ public class AdminController {
         } catch (NoSuchElementException e){
             return "redirect:/error/restaurant-error";
         }
+    }
+
+    @GetMapping("/edit-dish/{dishId}")
+    public String editDishForm(@PathVariable Long dishId, Model model){
+        try {
+            Dish dish = dishService.findDishById(dishId);
+            model.addAttribute("dish", dish);
+            return "admin/dish-edit";
+        } catch (NoSuchElementException e){
+            return "redirect:/error/restaurant-error";
+        }
+    }
+
+    @PostMapping("/edit-dish/{dishId}")
+    public String editDishById(@PathVariable Long dishId, @ModelAttribute("dish")DishDTO dto){
+        try {
+            dto.setId(dishId);
+            dishService.editDishById(dto);
+            return "redirect:/admin/restaurants";
+        }catch (NoSuchElementException e){
+            return "redirect:/error/restaurant-error";
+        }
+    }
+
+    @PostMapping("/delete-dish/{dishId}")
+    public String deleteDishById(@PathVariable("dishId") Long dishId){
+        dishService.deleteDishById(dishId);
+        return "redirect:/admin/edit-menu/" + dishId;
     }
 
 

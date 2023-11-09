@@ -66,8 +66,10 @@
             <p>Cena: <span th:text="${dish.price}"></span> zł</p>
             <p>Opis: <span th:text="${dish.description}"></span></p>
             <div class="button-container">
-                <a class="button" th:href="@{'/admin/edit-dish/' + ${restaurant.id} + '/' + ${dish.id}}">Edytuj Posiłek</a>
-                <a class="button" th:href="@{'/admin/delete-dish/' + ${dish.id}}">Usuń Posiłek</a>
+                <a class="button" th:href="@{'/admin/edit-dish/' + ${dish.id}}">Edytuj Posiłek</a>
+                <form th:action="@{'/admin/delete-dish/' + ${dish.id}}" method="post">
+                    <button type="submit" class="button">Usuń posiłek</button>
+                </form>
             </div>
         </li>
     </ul>
@@ -75,7 +77,7 @@
     <div class="button-container">
         <a class="button" th:href="@{'/admin/add-dish/' + ${restaurant.id}}">Dodaj nowe danie</a>
         <a class="button" th:href="@{'/admin/delete-restaurant/' + ${restaurant.id}}">Usuń Restaurację</a>
-        <a class="button" th:href="@{/restaurants}">Powrót</a>
+        <a class="button" th:href="@{/admin/restaurants}">Powrót</a>
     </div>
 </div>
 </body>
