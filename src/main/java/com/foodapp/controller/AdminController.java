@@ -82,6 +82,24 @@ public class AdminController {
         return "redirect:/admin/edit-menu/" + dishId;
     }
 
+    @GetMapping("/add-dish/{restaurantId}")
+    public String addDishForm(@PathVariable Long restaurantId, Model model) {
+        Dish dish = new Dish();
+        model.addAttribute("dish", dish);
+        model.addAttribute("restaurantId", restaurantId);
+        return "admin/add-dish";
+    }
+
+    @PostMapping("/add-dish/{restaurantId}")
+    public String addNewDish(@PathVariable Long restaurantId, @ModelAttribute DishDTO dto){
+        try {
+            dishService.addNewDish(restaurantId,dto);
+            return "redirect:/admin/edit-menu/" + restaurantId;
+        }catch (NoSuchElementException e){
+            return "redirect:/error/restaurant-error";
+        }
+    }
+
 
 
 
