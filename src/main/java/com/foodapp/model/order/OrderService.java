@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService implements ExtraPointsCalculator {
@@ -38,6 +39,11 @@ public class OrderService implements ExtraPointsCalculator {
 
     public List<Order> findAllByStatus(OrderStatus status, User user){
         return orderRepository.findAllByOrderStatusAndUser(status, user);
+    }
+    public List<Order> findAllOrdersWhenRatedIsTrue(){
+        return orderRepository.findAll().stream()
+                .filter(order -> order.getRated())
+                .collect(Collectors.toList());
     }
     @Transactional
     public Order createOrder(Long dishId, HttpSession session){

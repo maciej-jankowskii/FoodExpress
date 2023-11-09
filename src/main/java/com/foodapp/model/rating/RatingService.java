@@ -38,6 +38,10 @@ public class RatingService {
         return ratingMapper.map(rating);
     }
 
+    public void deleteRatingById(Long id){
+        ratingRepository.deleteById(id);
+    }
+
     /**
      Helper method for ratings
      */

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodApp - Zarządzaj ocenami</title>
+  <style>
+    body {
+      background-image: url('/img/knifefork.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    .header {
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .main-content {
+      margin: 20px;
+      padding: 20px;
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-container {
+      margin: 20px 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: rgba(0, 123, 255, 0.7);
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: rgba(0, 123, 255, 1);
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-spacing: 0;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #fff;
+    }
+
+    th {
+      background-color: rgba(0, 123, 255, 0.7);
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: rgba(0, 123, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>FoodApp - Zarządzaj Ocena</h1>
+</div>
+<div class="main-content">
+
+  <h2>Zrealizowane i ocenione zamówienia:</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID Zamówienia</th>
+      <th>Data Zamówienia</th>
+      <th>Użytkownik</th>
+      <th>Restauracja</th>
+      <th>Koszt</th>
+      <th>Wartość Oceny</th>
+      <th>Opis Oceny</th>
+      <th>Data Dodania Oceny</th>
+      <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${ratedOrders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.orderDate}"></td>
+      <td th:text="${order.user.firstName + ' ' + order.user.lastName}"></td>
+      <td th:text="${order.restaurant.name}"></td>
+      <td th:text="${order.totalCost}"></td>
+      <td th:text="${order.rating.value}"></td>
+      <td th:text="${order.rating.description}"></td>
+      <td th:text="${order.rating.dateAdded}"></td>
+      <td>
+          <button class="button" type="submit">Test</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a class="button" th:href="@{/admin-panel}">Powrót</a>
+</div>
+</body>
+</html>
