@@ -1,5 +1,6 @@
 package com.foodapp.model.order;
 
+import com.foodapp.exception.MinimumOrderValueException;
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishRepository;
 import com.foodapp.model.enums.OrderStatus;
@@ -94,6 +95,10 @@ public class OrderService implements ExtraPointsCalculator {
     @Transactional
     public void placeOrder(HttpSession session) {
         Order order = (Order) session.getAttribute("order");
+        BigDecimal minimalValue = BigDecimal.valueOf(20.0);
+        if (order.getTotalCost().compareTo(minimalValue) < 0){
+            throw new MinimumOrderValueException("The minimum order value is 20");
+        }
         BigDecimal additionalPoints = calculateExtraPointsForOrder(order);
         User user = userService.getLoggedInUser();
         setDataForPlacedOrderAndSave(order, additionalPoints, user);
@@ -139,6 +144,13 @@ public class OrderService implements ExtraPointsCalculator {
     public void addDishToOrder(Long dishId, List<Dish> dishes ) {
         Dish dish = dishRepository.findById(dishId).orElseThrow(() -> new NoSuchElementException("Dish not found"));
         dishes.add(dish);
+    }
+
+    public boolean isDishFromTheSameRestaurant(Long dishId, Order order){
+        Dish dish = dishRepository.findById(dishId).orElseThrow(() -> new NoSuchElementException("Dish not found"));
+        Long restaurantId = order.getRestaurant().getId();
+        Long dishRestaurantId = dish.getRestaurant().getId();
+        return restaurantId.equals(dishRestaurantId);
     }
 
     private void setInitialDataForNewOrder(Order order, Restaurant restaurant, List<Dish> dishes) {

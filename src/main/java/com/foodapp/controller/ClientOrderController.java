@@ -1,5 +1,6 @@
 package com.foodapp.controller;
 
+import com.foodapp.exception.MinimumOrderValueException;
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishService;
 import com.foodapp.model.enums.OrderStatus;
@@ -78,6 +79,9 @@ public class ClientOrderController {
             if (order == null) {
                 order = orderService.createOrder(dishId, session);
             } else {
+                if (!orderService.isDishFromTheSameRestaurant(dishId, order)){
+                    return "redirect:/different-restaurant-error";
+                }
                 orderService.addDishToOrder(dishId, order.getDishes());
                 order.setTotalCost(orderService.calculateTotalCost(order.getDishes()));
                 orderRepository.save(order);
@@ -128,9 +132,14 @@ public class ClientOrderController {
 
     @GetMapping("/place-order")
     public String placeOrder(HttpSession session){
-        Order order = (Order) session.getAttribute("order");
-        orderService.placeOrder(session);
-        return "order/payment-success";
+        try {
+            Order order = (Order) session.getAttribute("order");
+            orderService.placeOrder(session);
+            return "order/payment-success";
+        } catch (MinimumOrderValueException e){
+            return "redirect:/minimum-value-error";
+        }
+
     }
 
     /**
@@ -171,7 +180,15 @@ public class ClientOrderController {
     public String orderErrorForm(){
         return "error/order-error";
     }
+    @GetMapping("/different-restaurant-error")
+    public String diffRestaurantError(){
+        return "error/different-restaurant-error";
+    }
 
+    @GetMapping("/minimum-value-error")
+    public String minimumValueError(){
+        return "error/minimum-value-error";
+    }
 }
 
 

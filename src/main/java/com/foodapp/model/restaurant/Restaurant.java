@@ -5,6 +5,7 @@ import com.foodapp.model.enums.Cuisine;
 import com.foodapp.model.dish.Dish;
 import com.foodapp.model.rating.Rating;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
