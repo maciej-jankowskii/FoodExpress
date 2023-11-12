@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers(mvc.pattern("/")).permitAll()
                 .requestMatchers(mvc.pattern("/img/**")).permitAll()
+                .requestMatchers(mvc.pattern("/style/**")).permitAll()
                 .requestMatchers(mvc.pattern("/register")).permitAll()
                 .requestMatchers(mvc.pattern("/confirmation-reg")).permitAll()
                 .requestMatchers(mvc.pattern("/reg-error")).permitAll()

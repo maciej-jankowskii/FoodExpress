@@ -4,73 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu</title>
-  <style>
-    body {
-      background-image: url('/img/knifefork.jpg');
-      background-size: cover;
-      background-position: top;
-      background-repeat: no-repeat;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-
-    .header {
-      background-color: rgba(0, 123, 255, 0.7);
-      color: #fff;
-      padding: 20px;
-    }
-
-    .main-content {
-      margin: 20px;
-      padding: 20px;
-      background-size: cover;
-      background-position: top;
-      background-repeat: no-repeat;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-
-
-    .restaurant {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin: 10px 0;
-      text-align: center;
-    }
-
-    .restaurant h3 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .restaurant p {
-      margin: 5px 0;
-    }
-
-
-    .restaurant p:last-child {
-      font-style: italic;
-    }
-
-    .choose-button {
-      background-color: #007bff;
-      color: #fff;
-      padding: 5px 10px;
-      text-decoration: none;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .choose-button:hover {
-      background-color: #0056b3;
-    }
-
-  </style>
+  <link rel="stylesheet" href="../../static/style/order.css" th:href="@{style/order.css}">
 </head>
 <body>
 <div class="header">
@@ -79,6 +13,7 @@
 <div class="main-content">
   <div class="restaurants">
     <h2>Restauracje:</h2>
+    <a th:href="@{/home-page}" class="choose-button">Powrót</a>
     <ul style="list-style-type: none">
       <li th:each="restaurant : ${restaurants}" class="restaurant">
         <h3 th:text="${restaurant.name}"></h3>
