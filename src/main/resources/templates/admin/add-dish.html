@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodApp - Dodaj posiłek</title>
-  <link rel="stylesheet" href="../../static/style/admin.css" th:href="@{style/admin.css}">
+  <link rel="stylesheet" href="../../static/style/admin.css" th:href="@{/style/admin.css}">
 </head>
 <body>
 <div class="header">
-  <h1>FoodApp - Edytuj posiłek:</h1>
+  <h1>FoodApp - Dodaj posiłek:</h1>
 </div>
 <div class="main-content">
   <form  class="form-container" th:object="${dish}" th:action="@{'/admin/add-dish/' + ${restaurantId}}" method="post">

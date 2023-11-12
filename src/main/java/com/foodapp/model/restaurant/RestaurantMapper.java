@@ -1,8 +1,6 @@
 package com.foodapp.model.restaurant;
 
-import com.foodapp.model.address.Address;
 import com.foodapp.model.address.AddressRepository;
-import com.foodapp.model.dish.Dish;
 import com.foodapp.model.dish.DishRepository;
 import com.foodapp.model.enums.Cuisine;
 import org.springframework.stereotype.Service;

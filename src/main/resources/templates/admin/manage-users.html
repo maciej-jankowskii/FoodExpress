@@ -21,8 +21,7 @@
       <th>Imie i nazwisko</th>
       <th>Adres email</th>
       <th>Liczba zamówień</th>
-      <th>Akcja</th>
-
+      <th>Liczba punktów</th>
     </tr>
     </thead>
     <tbody>
@@ -31,9 +30,7 @@
       <td th:text="${user.firstName + ' ' + user.lastName}"></td>
       <td th:text="${user.email}"></td>
       <td th:text="${user.orders.size()}"></td>
-      <td>
-        <button class="button" type="submit">Test</button>
-      </td>
+      <td th:text="${user.extraPoints}"></td>
     </tr>
     </tbody>
   </table>

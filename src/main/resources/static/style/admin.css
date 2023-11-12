@@ -15,6 +15,11 @@ body {
     border-radius: 10px;
 }
 
+.form-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
 .header {
     background-color: rgba(0, 123, 255, 0.7);
 }
