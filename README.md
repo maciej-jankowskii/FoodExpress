@@ -1,4 +1,4 @@
-<h1 align="center" id="title">FoodApp</h1>
+<h1 align="center" id="title">FoodExpress</h1>
 
 <p id="description">A simple food ordering simulation application. 
   In the project, I used Spring Security, Spring Data JPA, Hibernate, Lombok, basic HTML, CSS with Thymeleaf. For testing, I utilized jUnit and Mockito.</br>
